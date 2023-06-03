@@ -3,6 +3,7 @@
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\FriendController;
+use App\Http\Controllers\HeartController;
 use App\Http\Controllers\PostController;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -34,6 +35,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('conversations', ConversationController::class);
 
     Route::resource('friends', FriendController::class);
+
+    Route::resource('hearts', HeartController::class);
 });
 
 

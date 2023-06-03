@@ -5,15 +5,23 @@ namespace App\Http\Controllers;
 use App\Models\Heart;
 use App\Http\Requests\StoreHeartRequest;
 use App\Http\Requests\UpdateHeartRequest;
+use App\Http\Resources\HeartResource;
+use App\Repositories\HeartRepository;
+use Illuminate\Http\JsonResponse;
 
 class HeartController extends Controller
 {
+    private $heartRepository;
+    public function __construct(HeartRepository $heartRepository)
+    {
+        $this->heartRepository = $heartRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return HeartResource::collection(Heart::paginate());
     }
 
     /**
@@ -21,7 +29,8 @@ class HeartController extends Controller
      */
     public function store(StoreHeartRequest $request)
     {
-        //
+        $this->heartRepository->store($request->validated());
+        return new JsonResponse(['message' => 'success'], 201);
     }
 
     /**
@@ -29,7 +38,7 @@ class HeartController extends Controller
      */
     public function show(Heart $heart)
     {
-        //
+        return new HeartResource($heart);
     }
 
     /**
@@ -37,7 +46,8 @@ class HeartController extends Controller
      */
     public function update(UpdateHeartRequest $request, Heart $heart)
     {
-        //
+        $this->heartRepository->update($request->validated(), $heart);
+        return new JsonResponse(['message' => 'success'], 204);
     }
 
     /**
@@ -45,6 +55,7 @@ class HeartController extends Controller
      */
     public function destroy(Heart $heart)
     {
-        //
+        $this->heartRepository->destroy($heart);
+        return new JsonResponse(['message' => 'success'], 204);
     }
 }
