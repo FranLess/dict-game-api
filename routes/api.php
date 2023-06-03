@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\FriendController;
 use App\Http\Controllers\PostController;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -25,10 +26,17 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return new UserResource($request->user()->only('id', 'name', 'email'));
 });
 
-Route::resource('posts', PostController::class);
-Route::middleware('auth:sanctum')->resource('comments', CommentController::class);
-Route::middleware('auth:sanctum')->resource('conversations', ConversationController::class);
-// Route::resource('posts', PostController::class)->middleware('auth');
+Route::middleware('auth:sanctum')->group(function () {
+    Route::resource('posts', PostController::class);
+
+    Route::resource('comments', CommentController::class);
+
+    Route::resource('conversations', ConversationController::class);
+
+    Route::resource('friends', FriendController::class);
+});
+
+
 
 Route::post('/sanctum/token', function (Request $request) {
     $request->validate([

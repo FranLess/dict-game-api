@@ -25,9 +25,9 @@ class UpdatePostRequest extends FormRequest
             'title' => 'string',
             'content' => 'string',
             'level_id' => 'integer',
-            'user_id' => 'integer',
-            'receptor_type_id' => 'integer',
-            'team_id' => 'integer',
+            // 'user_id' => 'integer',
+            // 'receptor_type_id' => 'integer',
+            // 'team_id' => 'integer',
         ];
     }
 }

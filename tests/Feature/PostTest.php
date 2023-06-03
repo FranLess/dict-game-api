@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -16,6 +17,7 @@ class PostTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
+        $this->actingAs(User::factory()->create());
         $this->artisan('db:seed');
     }
 
