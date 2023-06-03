@@ -5,6 +5,7 @@ use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\HeartController;
 use App\Http\Controllers\LevelController;
+use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostController;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -40,6 +41,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::resource('hearts', HeartController::class);
 
     Route::resource('levels', LevelController::class);
+
+    Route::resource('messages', MessageController::class);
 });
 
 

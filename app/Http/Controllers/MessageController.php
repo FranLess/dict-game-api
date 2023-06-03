@@ -5,15 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use App\Http\Requests\StoreMessageRequest;
 use App\Http\Requests\UpdateMessageRequest;
+use App\Http\Resources\MessageResource;
+use App\Repositories\MessageRepository;
+use Illuminate\Http\JsonResponse;
 
 class MessageController extends Controller
 {
+    private $messageRepository;
+
+    public function __construct(MessageRepository $messageRepository)
+    {
+        $this->messageRepository = $messageRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return MessageResource::collection(Message::paginate());
     }
 
     /**
@@ -21,7 +30,8 @@ class MessageController extends Controller
      */
     public function store(StoreMessageRequest $request)
     {
-        //
+        $this->messageRepository->store($request->validated());
+        return new JsonResponse(['message' => 'Message created successfully'], 201);
     }
 
     /**
@@ -29,7 +39,7 @@ class MessageController extends Controller
      */
     public function show(Message $message)
     {
-        //
+        return new MessageResource($message);
     }
 
     /**
@@ -37,7 +47,8 @@ class MessageController extends Controller
      */
     public function update(UpdateMessageRequest $request, Message $message)
     {
-        //
+        $this->messageRepository->update($request->validated(), $message);
+        return new JsonResponse(['message' => 'Message updated successfully'], 204);
     }
 
     /**
@@ -45,6 +56,7 @@ class MessageController extends Controller
      */
     public function destroy(Message $message)
     {
-        //
+        $this->messageRepository->destroy($message);
+        return new JsonResponse(['message' => 'Message deleted successfully'], 204);
     }
 }
