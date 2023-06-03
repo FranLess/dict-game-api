@@ -30,9 +30,9 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
+        // dd($request->user()->only(['id', 'name', 'email']));
         $comment = $this->commentRepository->store($request->validated());
         return new JsonResponse(['message' => 'Comment created successfully'], 201);
-        // return new CommentResource($comment);
     }
 
     /**

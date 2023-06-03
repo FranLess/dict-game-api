@@ -5,15 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Conversation;
 use App\Http\Requests\StoreConversationRequest;
 use App\Http\Requests\UpdateConversationRequest;
+use App\Http\Resources\ConversationResource;
+use App\Repositories\ConversationRepository;
+use Illuminate\Http\JsonResponse;
 
 class ConversationController extends Controller
 {
+    private $conversationRepository;
+
+    public function __construct(ConversationRepository $conversationRepository)
+    {
+        $this->conversationRepository = $conversationRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return ConversationResource::collection(Conversation::paginate());
     }
 
     /**
@@ -21,7 +30,8 @@ class ConversationController extends Controller
      */
     public function store(StoreConversationRequest $request)
     {
-        //
+        $this->conversationRepository->store($request->validated());
+        return new JsonResponse(['message' => 'Conversation created successfully'], 201);
     }
 
     /**
@@ -29,7 +39,7 @@ class ConversationController extends Controller
      */
     public function show(Conversation $conversation)
     {
-        //
+        return new ConversationResource($conversation);
     }
 
     /**
@@ -37,7 +47,8 @@ class ConversationController extends Controller
      */
     public function update(UpdateConversationRequest $request, Conversation $conversation)
     {
-        //
+        $this->conversationRepository->update($request->validated(), $conversation);
+        return new JsonResponse(['message' => 'Conversation updated successfully'], 204);
     }
 
     /**
@@ -45,6 +56,7 @@ class ConversationController extends Controller
      */
     public function destroy(Conversation $conversation)
     {
-        //
+        $this->conversationRepository->destroy($conversation);
+        return new JsonResponse(['message' => 'Conversation deleted successfully'], 204);
     }
 }

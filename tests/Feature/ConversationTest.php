@@ -2,14 +2,14 @@
 
 namespace Tests\Feature;
 
-use App\Models\Comment;
+use App\Models\Conversation;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
-class CommentTest extends TestCase
+class ConversationTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -22,19 +22,17 @@ class CommentTest extends TestCase
 
     public function test_index()
     {
-        $comment = Comment::factory(10)->create();
-        $response = $this->get('/api/comments');
+        $conversation = Conversation::factory(10)->create();
+        $response = $this->get('/api/conversations');
         $response->assertStatus(200);
     }
 
     public function test_store()
     {
 
-        $response = $this->post('/api/comments', [
-            'content' => 'test',
-            'post_id' => 1,
-            'user_id' => 1,
-            'comment_id' => null,
+        $response = $this->post('/api/conversations', [
+            'sender_id' => 1,
+            'receptor_id' => 2,
         ]);
 
         $response->assertStatus(201);
@@ -42,31 +40,32 @@ class CommentTest extends TestCase
 
     function test_show()
     {
-        $comment = Comment::factory()->create();
+        $conversation = Conversation::factory()->create();
 
-        $response = $this->get('/api/comments/' . $comment->id);
+        $response = $this->get('/api/conversations/' . $conversation->id);
         $response->assertStatus(200);
     }
 
     function test_update()
     {
-        $dummy = Comment::factory()->make();
-        $comment = Comment::factory()->create();
-        $response = $this->put('/api/comments/' . $comment->id, [
+        $dummy = Conversation::factory()->make();
+        $conversation = Conversation::factory()->create();
+        // $this->expectException();
+        $response = $this->put('/api/conversations/' . $conversation->id, [
             'content' => $dummy->content,
             'post_id' => $dummy->post_id,
             'user_id' => $dummy->user_id,
-            'comment_id' => 1,
+            'conversation_id' => 1,
         ]);
-        $response->assertStatus(204);
+        $response->assertStatus(403);
     }
 
     public function test_destroy()
     {
-        $comment = Comment::factory()->create();
-        $response = $this->delete('/api/comments/' . $comment->id);
+        $conversation = Conversation::factory()->create();
+        $response = $this->delete('/api/conversations/' . $conversation->id);
         $response->assertStatus(204);
         $this->expectException(ModelNotFoundException::class);
-        Comment::findOrFail($comment->id);
+        Conversation::findOrFail($conversation->id);
     }
 }

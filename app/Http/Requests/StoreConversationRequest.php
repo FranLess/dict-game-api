@@ -11,7 +11,7 @@ class StoreConversationRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,8 @@ class StoreConversationRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'sender_id' => 'required|integer',
+            'receptor_id' => 'required|integer',
         ];
     }
 }
