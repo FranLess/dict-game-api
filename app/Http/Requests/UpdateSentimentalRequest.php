@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use FontLib\Table\Type\name;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSentimentalRequest extends FormRequest
@@ -11,7 +12,7 @@ class UpdateSentimentalRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +23,7 @@ class UpdateSentimentalRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => 'required|string|max:255',
         ];
     }
 }

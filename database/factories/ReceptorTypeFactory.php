@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use FontLib\Table\Type\name;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,7 @@ class ReceptorTypeFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->word(),
         ];
     }
 }

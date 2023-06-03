@@ -31,6 +31,10 @@ class User extends Authenticatable
         'is_admin'
     ];
 
+    protected $guarded = [
+        'password',
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -49,17 +53,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_active' => 'boolean',
+        'is_admin' => 'boolean'
     ];
 
     public function hearts(): HasMany
     {
         return $this->hasMany(Heart::class);
-    }
-
-    public function isAdmin(): Attribute
-    {
-        return Attribute::make(
-            get: fn () => $this->is_admin
-        );
     }
 }

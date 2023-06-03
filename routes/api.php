@@ -7,6 +7,8 @@ use App\Http\Controllers\HeartController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ReceptorTypeController;
+use App\Http\Controllers\SentimentalController;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -40,9 +42,13 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('hearts', HeartController::class);
 
-    Route::resource('levels', LevelController::class);
-
     Route::resource('messages', MessageController::class);
+
+    Route::middleware('admin')->resource('levels', LevelController::class);
+
+    Route::middleware('admin')->resource('sentimentals', SentimentalController::class);
+
+    Route::middleware('admin')->resource('receptor-types', ReceptorTypeController::class);
 });
 
 
