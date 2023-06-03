@@ -21,9 +21,9 @@ class ImageFactory extends Factory
     {
         return [
             'source' => fake()->imageUrl(),
-            'name' => fake()->word(),
+            // 'name' => fake()->word(),
             'user_id' => FactoryHelper::getRandomModelId(User::class),
-            'level_id' => FactoryHelper::getRandomModelId(Level::class),
+            // 'level_id' => FactoryHelper::getRandomModelId(Level::class),
         ];
     }
 }
