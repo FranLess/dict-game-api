@@ -24,10 +24,10 @@ class StorePostRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            // 'user_id' => 'required|integer',
-            // 'level_id' => 'required|integer',
-            // 'receptor_type_id' => 'required|integer',
-            // 'team_id' => 'integer',
+            'user_id' => 'required|integer',
+            'level_id' => 'required|integer',
+            'receptor_type_id' => 'required|integer',
+            'team_id' => 'integer',
         ];
     }
 }

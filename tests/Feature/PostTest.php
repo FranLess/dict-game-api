@@ -16,7 +16,7 @@ class PostTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        // $this->artisan('db:seed');
+        $this->artisan('db:seed');
     }
 
     public function test_index()
@@ -31,7 +31,7 @@ class PostTest extends TestCase
 
         $response = $this->post('/api/posts', [
             'title' => 'test',
-            'body' => 'test',
+            'content' => 'test asdf asd',
             'user_id' => 1,
             'level_id' => 1,
             'receptor_type_id' => 1,

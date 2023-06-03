@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\PostController;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -24,6 +25,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::resource('posts', PostController::class);
+Route::resource('comments', CommentController::class);
+// Route::resource('posts', PostController::class)->middleware('auth');
 
 Route::post('/sanctum/token', function (Request $request) {
     $request->validate([
@@ -42,5 +45,3 @@ Route::post('/sanctum/token', function (Request $request) {
 
     return $user->createToken($request->device_name)->plainTextToken;
 });
-
-Route::resource('posts', PostController::class)->middleware('auth');
