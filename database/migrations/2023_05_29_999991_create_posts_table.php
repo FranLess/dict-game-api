@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->text('comment');
+            $table->text('content');
             $table->foreignId('user_id');
             $table->foreignId('level_id');
             $table->foreignId('receptor_type_id');

@@ -2,6 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\Post;
+use App\Models\User;
+use Database\Factories\Helpers\FactoryHelper;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +20,8 @@ class HeartFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'post_id' => FactoryHelper::getRandomModelId(Post::class),
+            'user_id' => FactoryHelper::getRandomModelId(User::class),
         ];
     }
 }

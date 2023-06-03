@@ -12,6 +12,13 @@ use Tests\TestCase;
 class PostTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp(): void
+    {
+        parent::setUp();
+        // $this->artisan('db:seed');
+    }
+
     public function test_index()
     {
         $post = Post::factory(10)->create();
@@ -36,7 +43,8 @@ class PostTest extends TestCase
 
     function test_show()
     {
-        $post = Post::factory()->make();
+        $post = Post::factory()->create();
+
         $response = $this->get('/api/posts/' . $post->id);
         $response->assertStatus(200);
     }

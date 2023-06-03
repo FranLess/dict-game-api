@@ -2,12 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Comment;
+use App\Models\Profile;
+use App\Models\User;
 use Database\Seeders\Traits\TruncateTable;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class CommentSeeder extends Seeder
+class UserSeeder extends Seeder
 {
     use TruncateTable;
     /**
@@ -15,7 +16,7 @@ class CommentSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->truncate('comments');
-        Comment::factory(100)->create();
+        $this->truncate('users');
+        User::factory(30)->create();
     }
 }

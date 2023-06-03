@@ -7,10 +7,12 @@ use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
 use App\Http\Resources\PostResource;
 use App\Repositories\PostRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\JsonResponse;
 
 class PostController extends Controller
 {
+
     private $postRepository;
     public function __construct(PostRepository $postRepository)
     {
