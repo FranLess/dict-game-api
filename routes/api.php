@@ -4,9 +4,11 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\FriendController;
 use App\Http\Controllers\HeartController;
+use App\Http\Controllers\ImageController;
 use App\Http\Controllers\LevelController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReceptorTypeController;
 use App\Http\Controllers\SentimentalController;
 use App\Http\Resources\UserResource;
@@ -49,6 +51,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('admin')->resource('sentimentals', SentimentalController::class);
 
     Route::middleware('admin')->resource('receptor-types', ReceptorTypeController::class);
+
+    Route::resource('images', ImageController::class);
+
+    Route::resource('profiles', ProfileController::class);
 });
 
 

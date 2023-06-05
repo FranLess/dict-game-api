@@ -23,9 +23,9 @@ class StoreImageRequest extends FormRequest
     {
         return [
             'source' => 'required|image|max:2000',
-            'name' => 'required|string',
             'user_id' => 'required|integer',
-            'level_id' => 'required|integer',
+            // 'name' => 'required|string',
+            // 'level_id' => 'required|integer',
         ];
     }
 }

@@ -2,22 +2,30 @@
 
 namespace App\Repositories;
 
+use App\Helpers\ImageManager;
 use App\Models\Image;
 use Illuminate\Support\Facades\DB;
 
 class ImageRepository
 {
+    use ImageManager;
     public function store(array $data)
     {
-        $image = $data['source'];
-        // dd($image);
         DB::transaction(function () use ($data) {
-            $created = Image::create([
-                'source' => data_get($data, 'source'),
-                'name' => data_get($data, 'name'),
-                'user_id' => data_get($data, 'user_id'),
-                'level_id' => data_get($data, 'level_id'),
-            ]);
+
+            // $path = public_path('images/');
+            // !is_dir($path) &&
+            //     mkdir($path, 0777, true);
+
+            if ($file = $data['source']) {
+
+                $this->uploads($file, auth()->user()->email . '/images/');
+
+                $created = Image::create([
+                    'source' => $file->hashName(),
+                    'user_id' => data_get($data, 'user_id'),
+                ]);
+            }
 
             throw_if(!$created, \Exception::class,  'Error creating image');
 
@@ -28,7 +36,12 @@ class ImageRepository
     public function update(array $data, Image $image)
     {
         DB::transaction(function () use ($data, $image) {
-            $updated = $image->update($data);
+            $file = $data['source'];
+            $this->removeFile(auth()->user()->email . '/images/' . $image->source);
+            $updated = $image->update([
+                'source' => $file->hashName(),
+            ]);
+            $this->uploads($file, auth()->user()->email . '/images/');
             throw_if(!$updated, \Exception::class,  'Error updating image');
         });
         return $image->refresh();
@@ -38,6 +51,7 @@ class ImageRepository
     {
         DB::transaction(function () use ($image) {
             $deleted = $image->delete();
+            $this->removeFile(auth()->user()->email . '/images/' . $image->source);
             throw_if(!$deleted, \Exception::class,  'Error deleting image');
         });
     }
