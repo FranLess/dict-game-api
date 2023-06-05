@@ -3,7 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -28,6 +31,10 @@ class User extends Authenticatable
         'is_admin'
     ];
 
+    protected $guarded = [
+        'password',
+    ];
+
     /**
      * The attributes that should be hidden for serialization.
      *
@@ -46,5 +53,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'is_active' => 'boolean',
+        'is_admin' => 'boolean'
     ];
+
+    public function hearts(): HasMany
+    {
+        return $this->hasMany(Heart::class);
+    }
 }

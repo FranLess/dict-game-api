@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use Database\Factories\Helpers\FactoryHelper;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,11 @@ class TeamFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->word(),
+            'slug' => fake()->slug(),
+            'user_id' => FactoryHelper::getRandomModelId(User::class),
+            'description' => fake()->text(),
+            'image' => fake()->imageUrl(),
         ];
     }
 }

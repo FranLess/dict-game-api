@@ -5,15 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Comment;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
+use App\Http\Resources\CommentResource;
+use App\Repositories\CommentRepository;
+use Illuminate\Http\JsonResponse;
 
 class CommentController extends Controller
 {
+    private $commentRepository;
+
+    public function __construct(CommentRepository $commentRepository)
+    {
+        $this->commentRepository = $commentRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return CommentResource::collection(Comment::paginate());
     }
 
     /**
@@ -21,7 +30,9 @@ class CommentController extends Controller
      */
     public function store(StoreCommentRequest $request)
     {
-        //
+        // dd($request->user()->only(['id', 'name', 'email']));
+        $comment = $this->commentRepository->store($request->validated());
+        return new JsonResponse(['message' => 'Comment created successfully'], 201);
     }
 
     /**
@@ -29,7 +40,7 @@ class CommentController extends Controller
      */
     public function show(Comment $comment)
     {
-        //
+        return new CommentResource($comment);
     }
 
     /**
@@ -37,7 +48,8 @@ class CommentController extends Controller
      */
     public function update(UpdateCommentRequest $request, Comment $comment)
     {
-        //
+        $this->commentRepository->update($request->validated(), $comment);
+        return new JsonResponse(['message' => 'Comment updated successfully'], 204);
     }
 
     /**
@@ -45,6 +57,7 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        $this->commentRepository->destroy($comment);
+        return new JsonResponse(['message' => 'Comment deleted successfully'], 204);
     }
 }

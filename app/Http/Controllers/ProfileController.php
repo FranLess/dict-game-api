@@ -5,15 +5,24 @@ namespace App\Http\Controllers;
 use App\Models\Profile;
 use App\Http\Requests\StoreProfileRequest;
 use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Resources\ProfileResource;
+use App\Repositories\ProfileRepository;
+use Illuminate\Http\JsonResponse;
 
 class ProfileController extends Controller
 {
+    private $profileRepository;
+
+    public function __construct(ProfileRepository $profileRepository)
+    {
+        $this->profileRepository = $profileRepository;
+    }
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return ProfileResource::collection(Profile::paginate());
     }
 
     /**
@@ -21,7 +30,8 @@ class ProfileController extends Controller
      */
     public function store(StoreProfileRequest $request)
     {
-        //
+        $this->profileRepository->store($request->validated());
+        return new JsonResponse(['message' => 'Profile created successfully'], 201);
     }
 
     /**
@@ -29,7 +39,7 @@ class ProfileController extends Controller
      */
     public function show(Profile $profile)
     {
-        //
+        return new ProfileResource($profile);
     }
 
     /**
@@ -37,7 +47,8 @@ class ProfileController extends Controller
      */
     public function update(UpdateProfileRequest $request, Profile $profile)
     {
-        //
+        $this->profileRepository->update($request->validated(), $profile);
+        return new JsonResponse(['message' => 'Profile updated successfully'], 204);
     }
 
     /**
@@ -45,6 +56,7 @@ class ProfileController extends Controller
      */
     public function destroy(Profile $profile)
     {
-        //
+        $this->profileRepository->destroy($profile);
+        return new JsonResponse(['message' => 'Profile deleted successfully'], 204);
     }
 }

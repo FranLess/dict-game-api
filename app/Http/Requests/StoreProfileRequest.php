@@ -11,7 +11,7 @@ class StoreProfileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,21 @@ class StoreProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'day_of_birth' => 'nullable|string',
+            'gender' => 'nullable|string',
+            'country_id' => 'required|integer',
+            'image' => 'nullable|image',
+            'image_header' => 'nullable|image',
+            'title' => 'nullable|string',
+            'bio' => 'nullable|string',
+            'likes' => 'nullable|integer',
+            'dislikes' => 'nullable|integer',
+            'address' => 'nullable|string',
+            'phone' => 'nullable|string',
+            'public_email' => 'nullable|string',
+            'user_id' => 'required|integer',
+            'level_id' => 'required|integer',
+            'sentimental_id' => 'nullable|integer',
         ];
     }
 }

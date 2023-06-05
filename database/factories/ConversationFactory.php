@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
+use Database\Factories\Helpers\FactoryHelper;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,8 @@ class ConversationFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'sender_id' => FactoryHelper::getRandomModelId(User::class),
+            'receptor_id' => FactoryHelper::getRandomModelId(User::class),
         ];
     }
 }

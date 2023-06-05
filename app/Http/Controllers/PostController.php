@@ -5,15 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Resources\PostResource;
+use App\Repositories\PostRepository;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Http\JsonResponse;
 
 class PostController extends Controller
 {
+
+    private $postRepository;
+    public function __construct(PostRepository $postRepository)
+    {
+        $this->postRepository = $postRepository;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return PostResource::collection(Post::paginate());
     }
 
     /**
@@ -21,7 +32,8 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
-        //
+        $this->postRepository->store($request->validated());
+        return new JsonResponse(['message' => 'Post created successfully'], 201);
     }
 
     /**
@@ -29,7 +41,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        //
+        return new PostResource($post);
     }
 
     /**
@@ -37,7 +49,8 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
-        //
+        $this->postRepository->update($request->validated(), $post);
+        return new JsonResponse(['message' => 'Post updated successfully'], 200);
     }
 
     /**
@@ -45,6 +58,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        $this->postRepository->destroy($post);
+        return new JsonResponse(['message' => 'Post deleted successfully'], 204);
     }
 }

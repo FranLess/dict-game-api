@@ -12,7 +12,7 @@ class Profile extends Model
     use HasFactory;
 
     protected $fillable = [
-        'birthday',
+        'day_of_birth',
         'gender',
         'country_id',
         'image',

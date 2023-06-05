@@ -3,10 +3,14 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Profile;
+use Database\Seeders\Traits\DisableForeignKeys;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
+    use DisableForeignKeys;
     /**
      * Seed the application's database.
      */
@@ -18,5 +22,40 @@ class DatabaseSeeder extends Seeder
         //     'name' => 'Test User',
         //     'email' => 'test@example.com',
         // ]);
+
+        $this->disableForeignKeys();
+
+        $this->call([
+
+            UserSeeder::class,
+
+            CountrySeeder::class,
+
+            LevelSeeder::class,
+
+            SentimentalSeeder::class,
+
+            ReceptorTypeSeeder::class,
+
+            ProfileSeeder::class,
+
+            TeamSeeder::class,
+
+            PostSeeder::class,
+
+            HeartSeeder::class,
+
+            ImageSeeder::class,
+
+            CommentSeeder::class,
+
+            FriendSeeder::class,
+
+            ConversationSeeder::class,
+
+            MessageSeeder::class,
+        ]);
+
+        $this->enableForeignKeys();
     }
 }

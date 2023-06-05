@@ -11,7 +11,7 @@ class UpdateProfileRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,21 @@ class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'day_of_birth' => 'nullable|date',
+            'gender' => 'nullable|string',
+            'country_id' => 'nullable|integer',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image_header' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'title' => 'nullable|string',
+            'bio' => 'nullable|string',
+            'likes' => 'nullable|integer',
+            'dislikes' => 'nullable|integer',
+            'address' => 'nullable|string',
+            'phone' => 'nullable|string',
+            'public_email' => 'nullable|string',
+            'user_id' => 'nullable|integer',
+            'level_id' => 'nullable|integer',
+            'sentimental_id' => 'nullable|integer',
         ];
     }
 }

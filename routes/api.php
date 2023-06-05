@@ -1,7 +1,22 @@
 <?php
 
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\ConversationController;
+use App\Http\Controllers\FriendController;
+use App\Http\Controllers\HeartController;
+use App\Http\Controllers\ImageController;
+use App\Http\Controllers\LevelController;
+use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ReceptorTypeController;
+use App\Http\Controllers\SentimentalController;
+use App\Http\Resources\UserResource;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Validation\ValidationException;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +30,49 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return new UserResource($request->user()->only('id', 'name', 'email'));
+});
+
+Route::middleware('auth:sanctum')->group(function () {
+    Route::resource('posts', PostController::class);
+
+    Route::resource('comments', CommentController::class);
+
+    Route::resource('conversations', ConversationController::class);
+
+    Route::resource('friends', FriendController::class);
+
+    Route::resource('hearts', HeartController::class);
+
+    Route::resource('messages', MessageController::class);
+
+    Route::middleware('admin')->resource('levels', LevelController::class);
+
+    Route::middleware('admin')->resource('sentimentals', SentimentalController::class);
+
+    Route::middleware('admin')->resource('receptor-types', ReceptorTypeController::class);
+
+    Route::resource('images', ImageController::class);
+
+    Route::resource('profiles', ProfileController::class);
+});
+
+
+
+Route::post('/sanctum/token', function (Request $request) {
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required',
+        'device_name' => 'required',
+    ]);
+
+    $user = User::where('email', $request->email)->first();
+
+    if (!$user || !Hash::check($request->password, $user->password)) {
+        throw ValidationException::withMessages([
+            'email' => ['The provided credentials are incorrect.'],
+        ]);
+    }
+
+    return $user->createToken($request->device_name)->plainTextToken;
 });
