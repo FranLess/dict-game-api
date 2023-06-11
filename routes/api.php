@@ -30,7 +30,8 @@ use Illuminate\Validation\ValidationException;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return new UserResource($request->user()->only('id', 'name', 'email'));
+    $user = $request->user()->load('profile', 'posts', 'comments', 'friends', 'hearts', 'sender_conversations', 'receptor_conversations', 'messages');
+    return new UserResource($user);
 });
 
 Route::middleware('auth:sanctum')->group(function () {
@@ -74,5 +75,7 @@ Route::post('/sanctum/token', function (Request $request) {
         ]);
     }
 
-    return $user->createToken($request->device_name)->plainTextToken;
+    $token = $user->createToken($request->device_name)->plainTextToken;
+
+    return response()->json($token, 200);
 });

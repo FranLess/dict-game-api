@@ -4,9 +4,12 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -57,8 +60,55 @@ class User extends Authenticatable
         'is_admin' => 'boolean'
     ];
 
-    public function hearts(): HasMany
+
+    // RELATIONSHIPS
+    function hearts(): HasMany
     {
         return $this->hasMany(Heart::class);
+    }
+
+    function profile(): HasOne
+    {
+        return $this->hasOne(Profile::class);
+    }
+
+    function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    function sender_conversations(): HasMany
+    {
+        return $this->hasMany(Conversation::class, 'sender_id');
+    }
+
+    function receptor_conversations(): HasMany
+    {
+        return $this->hasMany(Conversation::class, 'receptor_id');
+    }
+
+    function messages(): HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    function friends(): HasMany
+    {
+        return $this->hasMany(Friend::class, 'sender_id');
+    }
+
+    function teams(): HasMany
+    {
+        return $this->hasMany(Team::class);
+    }
+
+    function teams_member(): BelongsToMany
+    {
+        return $this->belongsToMany(Team::class);
     }
 }
