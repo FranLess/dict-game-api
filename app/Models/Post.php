@@ -21,7 +21,7 @@ class Post extends Model
         'team_id'
     ];
 
-
+    // RELATIONSHIPS
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

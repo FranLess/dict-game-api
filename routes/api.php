@@ -30,7 +30,9 @@ use Illuminate\Validation\ValidationException;
 */
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    $user = $request->user()->load('profile', 'posts', 'comments', 'friends', 'hearts', 'sender_conversations', 'receptor_conversations', 'messages');
+    $user = $request->user();
+    $user = $user->load('profile.country', 'profile.level', 'profile.sentimental', 'posts', 'comments', 'friends', 'hearts', 'sender_conversations', 'receptor_conversations', 'messages')->loadCount('friends', 'posts');
+
     return new UserResource($user);
 });
 

@@ -28,6 +28,7 @@ class StorePostRequest extends FormRequest
             'level_id' => 'required|integer',
             'receptor_type_id' => 'required|integer',
             'team_id' => 'nullable|integer',
+            'image' => 'nullable|image|max:2000'
         ];
     }
 }
