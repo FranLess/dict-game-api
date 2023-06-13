@@ -14,24 +14,26 @@ return new class extends Migration
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
             // FOREIGN KEYS
-            $table->foreignId('user_id');
+            $table->foreignId('user_id')->unique();
             $table->foreign('user_id')->references('id')->on('users');
 
             $table->foreignId('level_id');
             $table->foreign('level_id')->references('id')->on('levels');
 
-            $table->foreignId('sentimental_id');
+            $table->foreignId('sentimental_id')->nullable();
             $table->foreign('sentimental_id')->references('id')->on('sentimentals');
 
-            $table->date('day_of_birth');
+            $table->foreignId('country_id')->nullable();
+            $table->foreign('country_id')->references('id')->on('countries');
+
+            $table->date('day_of_birth')->nullable();
             $table->string('gender')->nullable();
-            $table->unsignedBigInteger('country_id');
             $table->string('image')->nullable();
             $table->string('image_header')->nullable();
             $table->string('title')->nullable();
             $table->string('bio')->nullable();
-            $table->integer('likes');
-            $table->integer('dislikes');
+            $table->integer('likes')->nullable();
+            $table->integer('dislikes')->nullable();
             $table->string('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('public_email')->nullable();

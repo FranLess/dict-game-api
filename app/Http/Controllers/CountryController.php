@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Country;
 use App\Http\Requests\StoreCountryRequest;
 use App\Http\Requests\UpdateCountryRequest;
+use App\Http\Resources\CountryResource;
 
 class CountryController extends Controller
 {
@@ -13,7 +14,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        //
+        return CountryResource::collection(Country::all());
     }
 
     /**
