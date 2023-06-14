@@ -18,6 +18,17 @@ class Comment extends Model
         'comment_id'
     ];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::saving(function ($model) {
+            if (empty($model->comment_id)) {
+                $model->comment_id = $model->id;
+            }
+        });
+    }
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);

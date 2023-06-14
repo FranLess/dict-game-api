@@ -15,6 +15,8 @@ class Post extends Model
     protected $fillable = [
         'title',
         'content',
+        'image',
+        'image_source',
         'user_id',
         'level_id',
         'receptor_type_id',
@@ -25,6 +27,11 @@ class Post extends Model
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
     }
 
     function images(): BelongsToMany

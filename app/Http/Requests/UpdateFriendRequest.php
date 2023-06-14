@@ -23,7 +23,7 @@ class UpdateFriendRequest extends FormRequest
     {
         return [
             'is_accepted' => 'boolean',
-            'is_read' => 'boolean',
+            // 'is_read' => 'boolean',
         ];
     }
 }

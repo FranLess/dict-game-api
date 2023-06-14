@@ -59,19 +59,23 @@ class ProfileRepository
             if (data_get($data, 'image') && is_object($data['image'])) {
                 $image = data_get($data, 'image');
                 $imageSource = $data['image']->hashName();
+                $imageUrl = asset('storage/' . auth()->user()->email . '/profile/' . $imageSource);
                 $this->uploads($image, auth()->user()->email . '/profile/');
                 $this->removeFile(auth()->user()->email . '/profile/' . $profile->image);
             }
             if (data_get($data, 'image_header') && is_object($data['image_header'])) {
                 $imageHeader = data_get($data, 'image_header');
                 $imageHeaderSource = $data['image_header']->hashName();
+                $imageHeaderUrl = asset('storage/' . auth()->user()->email . '/profile/' . $imageHeaderSource);
                 $this->uploads($imageHeader, auth()->user()->email . '/profile/');
                 $this->removeFile(auth()->user()->email . '/profile/' . $profile->image_header);
             }
 
             $updated = $profile->update([
                 'image' => $imageSource,
+                'image_url' => $imageUrl ?? null,
                 'image_header' => $imageHeaderSource,
+                'image_header_url' => $imageHeaderUrl ?? null,
                 'day_of_birth' => data_get($data, 'day_of_birth'),
                 'gender' => data_get($data, 'gender'),
                 'country_id' => data_get($data, 'country_id'),

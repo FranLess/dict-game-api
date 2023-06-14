@@ -36,6 +36,7 @@ class User extends Authenticatable
 
     protected $guarded = [
         'password',
+
     ];
 
     /**
@@ -100,6 +101,11 @@ class User extends Authenticatable
     function friends(): HasMany
     {
         return $this->hasMany(Friend::class, 'sender_id');
+    }
+
+    function friendsRequests(): HasMany
+    {
+        return $this->hasMany(Friend::class, 'receptor_id');
     }
 
     function teams(): HasMany

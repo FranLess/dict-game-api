@@ -29,7 +29,9 @@ return new class extends Migration
             $table->date('day_of_birth')->nullable();
             $table->string('gender')->nullable();
             $table->string('image')->nullable();
+            $table->string('image_url')->nullable();
             $table->string('image_header')->nullable();
+            $table->string('image_header_url')->nullable();
             $table->string('title')->nullable();
             $table->string('bio')->nullable();
             $table->integer('likes')->nullable();

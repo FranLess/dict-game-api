@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Heart;
 use App\Models\Post;
 use App\Models\User;
 use Database\Factories\Helpers\FactoryHelper;
@@ -19,9 +20,14 @@ class HeartFactory extends Factory
      */
     public function definition(): array
     {
+        do {
+            $user_id = FactoryHelper::getRandomModelId(User::class);
+            $post_id = FactoryHelper::getRandomModelId(Post::class);
+        } while (Heart::where('user_id', $user_id)->where('post_id', $post_id)->exists());
+
         return [
-            'post_id' => FactoryHelper::getRandomModelId(Post::class),
-            'user_id' => FactoryHelper::getRandomModelId(User::class),
+            'post_id' => $post_id,
+            'user_id' => $user_id,
         ];
     }
 }

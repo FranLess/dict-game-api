@@ -12,7 +12,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReceptorTypeController;
 use App\Http\Controllers\SentimentalController;
-use App\Http\Resources\UserResource;
+use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -30,13 +30,22 @@ use Illuminate\Validation\ValidationException;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    $user = $request->user();
-    $user = $user->load('profile.country', 'profile.level', 'profile.sentimental', 'posts', 'comments', 'friends', 'hearts', 'sender_conversations', 'receptor_conversations', 'messages')->loadCount('friends', 'posts');
 
-    return new UserResource($user);
+// USERS ENDPOINTS
+Route::middleware('auth:sanctum')->prefix('user')->group(function () {
+    Route::get('/', [UserController::class, 'getCurrent']);
+    Route::get('/all', [UserController::class, 'index']);
+    Route::get('/{user}', [UserController::class, 'get']);
 });
 
+Route::middleware('auth:sanctum')->prefix('friend')->group(function () {
+    Route::post('/request/{user}', [UserController::class, 'fiendRequest']);
+    Route::post('/delete/{friend}', [UserController::class, 'friendDelete']);
+    Route::post('/accept/{friend}', [UserController::class, 'friendAccept']);
+});
+
+
+// API FUNCTIONS ENDPOINTS
 Route::middleware('auth:sanctum')->group(function () {
     // Route::resource('posts', PostController::class);
     Route::prefix('posts')->group(function () {
@@ -141,7 +150,7 @@ Route::middleware('auth:sanctum')->group(function () {
 });
 
 
-
+// SANCTUM TOKEN ENDPOINT
 Route::post('/sanctum/token', function (Request $request) {
     $request->validate([
         'email' => 'required|email',

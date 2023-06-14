@@ -25,7 +25,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        return PostResource::collection(Post::with('user', 'images')->where('level_id', 2)->paginate());
+        return PostResource::collection(Post::with('user.profile', 'images')->where('level_id', 2)->paginate());
     }
 
     /**
@@ -33,6 +33,7 @@ class PostController extends Controller
      */
     public function store(StorePostRequest $request)
     {
+        // return response()->json($request->validated(), 201);
         $this->postRepository->store($request->validated());
         return new JsonResponse(['message' => 'Post created successfully'], 201);
     }
@@ -42,7 +43,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return new PostResource($post);
+        return new PostResource($post->load('comments.user.profile', 'hearts', 'user.profile'));
     }
 
     /**
