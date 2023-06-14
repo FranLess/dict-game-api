@@ -26,9 +26,6 @@ class DatabaseSeeder extends Seeder
         $this->disableForeignKeys();
 
         $this->call([
-
-            UserSeeder::class,
-
             CountrySeeder::class,
 
             LevelSeeder::class,
@@ -37,23 +34,25 @@ class DatabaseSeeder extends Seeder
 
             ReceptorTypeSeeder::class,
 
-            ProfileSeeder::class,
+            // UserSeeder::class,
 
-            TeamSeeder::class,
+            // ProfileSeeder::class,
 
-            PostSeeder::class,
+            // TeamSeeder::class,
 
-            HeartSeeder::class,
+            // PostSeeder::class,
 
-            ImageSeeder::class,
+            // HeartSeeder::class,
 
-            CommentSeeder::class,
+            // ImageSeeder::class,
 
-            FriendSeeder::class,
+            // CommentSeeder::class,
 
-            ConversationSeeder::class,
+            // FriendSeeder::class,
 
-            MessageSeeder::class,
+            // ConversationSeeder::class,
+
+            // MessageSeeder::class,
         ]);
 
         $this->enableForeignKeys();

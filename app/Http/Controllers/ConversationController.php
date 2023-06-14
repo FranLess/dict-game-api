@@ -30,8 +30,8 @@ class ConversationController extends Controller
      */
     public function store(StoreConversationRequest $request)
     {
-        $this->conversationRepository->store($request->validated());
-        return new JsonResponse(['message' => 'Conversation created successfully'], 201);
+        $conversation = $this->conversationRepository->store($request->validated());
+        return new JsonResponse(['message' => 'Conversation created successfully', 'id' => $conversation->id], 201);
     }
 
     /**
@@ -39,7 +39,7 @@ class ConversationController extends Controller
      */
     public function show(Conversation $conversation)
     {
-        return new ConversationResource($conversation);
+        return new ConversationResource($conversation->load('sender.profile', 'receptor.profile', 'messages.user'));
     }
 
     /**

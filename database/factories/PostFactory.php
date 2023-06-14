@@ -25,6 +25,8 @@ class PostFactory extends Factory
         return [
             'title' => fake()->sentence(),
             'content' => fake()->paragraph(),
+            'image' => fake()->imageUrl(),
+            'image_source' => fake()->imageUrl(),
             'user_id' => FactoryHelper::getRandomModelId(User::class),
             'level_id' => FactoryHelper::getRandomModelId(Level::class),
             'receptor_type_id' => FactoryHelper::getRandomModelId(ReceptorType::class),

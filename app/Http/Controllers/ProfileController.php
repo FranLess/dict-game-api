@@ -47,6 +47,7 @@ class ProfileController extends Controller
      */
     public function update(UpdateProfileRequest $request, Profile $profile)
     {
+        // return new JsonResponse(['data' => $request->validated()], 200);
         $this->profileRepository->update($request->validated(), $profile);
         return new JsonResponse(['message' => 'Profile updated successfully'], 204);
     }

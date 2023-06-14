@@ -16,6 +16,9 @@ class ImageSeeder extends Seeder
     public function run(): void
     {
         $this->truncate('images');
-        Image::factory(50)->create();
+        foreach (range(1, 50) as $i) {
+            $image = Image::factory()->create();
+            $image->posts()->attach($image->id);
+        }
     }
 }

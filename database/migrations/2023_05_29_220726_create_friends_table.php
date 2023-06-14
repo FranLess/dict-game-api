@@ -17,6 +17,9 @@ return new class extends Migration
             $table->foreignId('receptor_id')->constrained('users');
             $table->boolean('is_accepted')->default(false);
             $table->boolean('is_read')->default(false);
+
+            $table->unique(['sender_id', 'receptor_id']);
+            $table->unique(['receptor_id', 'sender_id']);
             $table->timestamps();
         });
     }

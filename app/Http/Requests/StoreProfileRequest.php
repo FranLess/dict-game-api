@@ -24,7 +24,7 @@ class StoreProfileRequest extends FormRequest
         return [
             'day_of_birth' => 'nullable|string',
             'gender' => 'nullable|string',
-            'country_id' => 'required|integer',
+            'country_id' => 'nullable|integer',
             'image' => 'nullable|image',
             'image_header' => 'nullable|image',
             'title' => 'nullable|string',

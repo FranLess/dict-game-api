@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('content');
+            $table->string('image')->nullable();
+            $table->string('image_source')->nullable();
             $table->foreignId('user_id');
             $table->foreignId('level_id');
             $table->foreignId('receptor_type_id');

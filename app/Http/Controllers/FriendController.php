@@ -39,7 +39,7 @@ class FriendController extends Controller
      */
     public function show(Friend $friend)
     {
-        return new FriendResource($friend);
+        return new FriendResource($friend->load('sender', 'receptor'));
     }
 
     /**

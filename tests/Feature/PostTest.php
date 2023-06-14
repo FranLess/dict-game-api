@@ -7,6 +7,8 @@ use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use PhpParser\Node\Expr\AssignOp\Mod;
 use Tests\TestCase;
 
@@ -30,6 +32,9 @@ class PostTest extends TestCase
 
     public function test_store()
     {
+        Storage::fake('public');
+
+        $image = UploadedFile::fake()->image('test.jpg');
 
         $response = $this->post('/api/posts', [
             'title' => 'test',
@@ -37,7 +42,25 @@ class PostTest extends TestCase
             'user_id' => 1,
             'level_id' => 1,
             'receptor_type_id' => 1,
-            'team_id' => 1
+            'team_id' => 1,
+            'image' => $image
+        ]);
+
+        Storage::disk('public')->assertExists(auth()->user()->email . '/posts/' . $image->hashName());
+        $response->assertStatus(201);
+    }
+
+    public function test_store_without_image()
+    {
+
+
+        $response = $this->post('/api/posts', [
+            'title' => 'test',
+            'content' => 'test asdf asd',
+            'user_id' => 1,
+            'level_id' => 1,
+            'receptor_type_id' => 1,
+            'team_id' => 1,
         ]);
 
         $response->assertStatus(201);

@@ -17,6 +17,6 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         $this->truncate('users');
-        User::factory(30)->create();
+        User::factory(100)->create();
     }
 }

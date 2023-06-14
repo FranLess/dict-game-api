@@ -25,7 +25,7 @@ class StoreMessageRequest extends FormRequest
             'user_id' => 'required|integer',
             'conversation_id' => 'required|integer',
             'content' => 'required|string',
-            'is_read' => 'required|boolean',
+            // 'is_read' => 'required|boolean',
         ];
     }
 }

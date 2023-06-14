@@ -22,21 +22,21 @@ class UpdateProfileRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'day_of_birth' => 'nullable|date',
-            'gender' => 'nullable|string',
-            'country_id' => 'nullable|integer',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'image_header' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'title' => 'nullable|string',
-            'bio' => 'nullable|string',
-            'likes' => 'nullable|integer',
-            'dislikes' => 'nullable|integer',
-            'address' => 'nullable|string',
-            'phone' => 'nullable|string',
-            'public_email' => 'nullable|string',
-            'user_id' => 'nullable|integer',
-            'level_id' => 'nullable|integer',
-            'sentimental_id' => 'nullable|integer',
+            'day_of_birth' => 'nullable',
+            'gender' => 'nullable',
+            'country_id' => 'nullable',
+            'image' => 'nullable',
+            'image_header' => 'nullable',
+            'title' => 'nullable',
+            'bio' => 'nullable',
+            // 'likes' => 'nullable',
+            // 'dislikes' => 'nullable',
+            'address' => 'nullable',
+            'phone' => 'nullable',
+            'public_email' => 'nullable',
+            'user_id' => 'nullable',
+            'level_id' => 'nullable',
+            'sentimental_id' => 'nullable',
         ];
     }
 }

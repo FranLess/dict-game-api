@@ -13,6 +13,23 @@ class SentimentalSeeder extends Seeder
      */
     public function run(): void
     {
-        Sentimental::factory(10)->create(); // (10
+        $emotions = [
+            'Feliz',
+            'Triste',
+            'Enojado',
+            'Asustado',
+            'Emocionado',
+            'Cansado',
+            'Alegre',
+            'Nervioso',
+            'Sorprendido',
+            'Amoroso',
+        ];
+
+        foreach ($emotions as $emotion) {
+            Sentimental::factory()->create([
+                'name' => $emotion,
+            ]);
+        }
     }
 }
