@@ -22,8 +22,12 @@ class UserController extends Controller
             'friendsRequests.sender.profile',
             'friendsRequests.receptor.profile',
             'hearts',
-            'sender_conversations',
-            'receptor_conversations',
+            'sender_conversations.sender.profile',
+            'sender_conversations.receptor.profile',
+            'sender_conversations.messages',
+            'receptor_conversations.messages',
+            'receptor_conversations.sender.profile',
+            'receptor_conversations.receptor.profile',
             'messages'
         )->loadCount('friends', 'posts');
 
@@ -32,7 +36,18 @@ class UserController extends Controller
 
     function get(User $user)
     {
-        return new UserResource($user->load('profile.country', 'profile.level', 'profile.sentimental', 'posts', 'comments', 'friends', 'hearts', 'sender_conversations', 'receptor_conversations', 'messages')->loadCount('friends', 'posts'));
+        return new UserResource($user->load(
+            'profile.country',
+            'profile.level',
+            'profile.sentimental',
+            'posts',
+            'comments',
+            'friends',
+            'hearts',
+            'sender_conversations',
+            'receptor_conversations',
+            'messages'
+        )->loadCount('friends', 'posts'));
     }
 
     function index()

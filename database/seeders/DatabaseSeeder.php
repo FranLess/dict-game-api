@@ -34,25 +34,25 @@ class DatabaseSeeder extends Seeder
 
             ReceptorTypeSeeder::class,
 
-            UserSeeder::class,
+            // UserSeeder::class,
 
-            ProfileSeeder::class,
+            // ProfileSeeder::class,
 
-            TeamSeeder::class,
+            // TeamSeeder::class,
 
-            PostSeeder::class,
+            // PostSeeder::class,
 
-            HeartSeeder::class,
+            // HeartSeeder::class,
 
-            ImageSeeder::class,
+            // ImageSeeder::class,
 
-            CommentSeeder::class,
+            // CommentSeeder::class,
 
-            FriendSeeder::class,
+            // FriendSeeder::class,
 
-            ConversationSeeder::class,
+            // ConversationSeeder::class,
 
-            MessageSeeder::class,
+            // MessageSeeder::class,
         ]);
 
         $this->enableForeignKeys();

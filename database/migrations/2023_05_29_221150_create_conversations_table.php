@@ -17,6 +17,9 @@ return new class extends Migration
             // $table->string('slug')->unique();
             $table->foreignId('sender_id')->constrained('users');
             $table->foreignId('receptor_id')->constrained('users');
+
+            $table->unique(['sender_id', 'receptor_id']);
+            $table->unique(['receptor_id', 'sender_id']);
             $table->timestamps();
         });
     }

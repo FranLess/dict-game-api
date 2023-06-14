@@ -23,7 +23,7 @@ class HeartFactory extends Factory
         do {
             $user_id = FactoryHelper::getRandomModelId(User::class);
             $post_id = FactoryHelper::getRandomModelId(Post::class);
-        } while (Heart::where('user_id', $user_id)->where('post_id', $post_id)->exists());
+        } while (!Heart::where('user_id', $user_id)->where('post_id', $post_id)->exists());
 
         return [
             'post_id' => $post_id,

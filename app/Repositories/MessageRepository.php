@@ -14,7 +14,7 @@ class MessageRepository
                 'user_id' => data_get($data, 'user_id'),
                 'conversation_id' => data_get($data, 'conversation_id'),
                 'content' => data_get($data, 'content'),
-                'is_read' => data_get($data, 'is_read'),
+                'is_read' => data_get($data, 'is_read', false),
             ]);
 
             throw_if(!$created, \Exception::class,  'Error creating message');

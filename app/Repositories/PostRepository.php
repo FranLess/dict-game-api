@@ -13,6 +13,7 @@ class PostRepository
     {
         DB::transaction(function () use ($data) {
             $imageName = null;
+            $imageSource = null;
 
             if (data_get($data, 'image') && is_object($data['image'])) {
                 $image = data_get($data, 'image');
@@ -41,16 +42,21 @@ class PostRepository
     public function update(array $data, Post $post)
     {
         DB::transaction(function () use ($data, $post) {
-            if (data_get($data, 'image') && is_object($data['image'])) {
+            $imageName = $post->image;
+            $imageSource = $post->image_source;
+
+            if (!is_string($data['image'])) {
                 $image = data_get($data, 'image');
+                $this->removeFile(auth()->user()->email . '/posts/' . $imageName);
                 $this->uploads($image, auth()->user()->email . '/posts/');
                 $imageName = $image->hashName();
                 $imageSource = asset("storage/" . auth()->user()->email . "/posts/{$data['image']->hashName()}");
             }
+
             $updated = $post->update([
                 ...$data,
-                'image' => $imageName ?? $post->image,
-                'image_source' => $imageSource ?? $post->image_source,
+                'image' => $imageName,
+                'image_source' => $imageSource,
             ]);
             throw_if(!$updated, \Exception::class,  'Error updating post');
         });
